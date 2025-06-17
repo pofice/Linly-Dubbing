@@ -11,6 +11,8 @@ def translator_response(messages, to_language = 'zh-CN', translator_server = 'bi
         to_language = 'zh-CN'
     elif 'English' in to_language:
         to_language = 'en'
+    elif 'Vietnamese' in to_language or '越南语' in to_language:
+        to_language = 'vi'
     translation = ''
     for retry in range(3):
         try:

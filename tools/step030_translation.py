@@ -12,6 +12,7 @@ from tools.step033_translation_translator import translator_response
 from tools.step034_translation_ernie import ernie_response
 from tools.step035_translation_qwen import qwen_response
 from tools.step036_translation_ollama import ollama_response
+from tools.step037_translation_vietnamese import translate_vietnamese_main
 
 load_dotenv()
 import traceback
@@ -313,6 +314,10 @@ def _translate(summary, transcript, target_language='简体中文', method='LLM'
     return full_translation
 
 def translate(method, folder, target_language='简体中文'):
+    # 如果目标语言是越南语，使用专门的越南语翻译模块
+    if target_language == 'Vietnamese':
+        return translate_vietnamese_main(method, folder)
+    
     if os.path.exists(os.path.join(folder, 'translation.json')):
         logger.info(f'Translation already exists in {folder}')
         return True
@@ -357,14 +362,17 @@ def translate(method, folder, target_language='简体中文'):
 
 def translate_all_transcript_under_folder(folder, method, target_language):
     summary_json , translate_json = None, None
+    translation_file = 'translation_vietnamese.json' if target_language == 'Vietnamese' else 'translation.json'
+    
     for root, dirs, files in os.walk(folder):
-        if 'transcript.json' in files and 'translation.json' not in files:
+        if 'transcript.json' in files and translation_file not in files:
             summary_json , translate_json = translate(method, root, target_language)
-        elif 'translation.json' in files:
+        elif translation_file in files:
             summary_json = json.load(open(os.path.join(root, 'summary.json'), 'r', encoding='utf-8'))
-            translate_json = json.load(open(os.path.join(root, 'translation.json'), 'r', encoding='utf-8'))
+            translate_json = json.load(open(os.path.join(root, translation_file), 'r', encoding='utf-8'))
+    
     print(summary_json, translate_json)
-    return f'Translated all videos under {folder}',summary_json , translate_json
+    return f'Translated all videos under {folder} to {target_language}', summary_json, translate_json
 
 if __name__ == '__main__':
     # translate_all_transcript_under_folder(r'videos', 'LLM' , '简体中文')

@@ -28,7 +28,7 @@ class TranslationTab(QWidget):
 
         # 目标语言
         self.target_language = QComboBox()
-        self.target_language.addItems(['简体中文', '繁体中文', 'English', 'Cantonese', 'Japanese', 'Korean'])
+        self.target_language.addItems(['简体中文', '繁体中文', 'English', 'Cantonese', 'Japanese', 'Korean', 'Vietnamese'])
         self.layout.addWidget(QLabel("目标语言"))
         self.layout.addWidget(self.target_language)
 
