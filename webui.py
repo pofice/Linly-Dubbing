@@ -29,12 +29,12 @@ full_auto_interface = gr.Interface(
         gr.Radio([None, 1, 2, 3, 4, 5, 6, 7, 8, 9], label='最小说话人数', value=None),
         gr.Radio([None, 1, 2, 3, 4, 5, 6, 7, 8, 9], label='最大说话人数', value=None),
 
-        gr.Dropdown(['OpenAI', 'LLM', 'Google Translate', 'Bing Translate', 'Ernie'], label='翻译方式', value='LLM'),
-        gr.Dropdown(['简体中文', '繁体中文', 'English', 'Cantonese', 'Japanese', 'Korean'], label='目标语言', value='简体中文'),
+        gr.Dropdown(['OpenAI', 'LLM', 'Google Translate', 'Bing Translate', 'Ernie'], label='翻译方式', value='Bing Translate'),
+        gr.Dropdown(['简体中文', '繁体中文', 'English', 'Cantonese', 'Japanese', 'Korean', 'Vietnamese'], label='目标语言', value='Vietnamese'),
 
-        gr.Dropdown(['xtts', 'cosyvoice', 'EdgeTTS'], label='AI语音生成方法', value='xtts'),
-        gr.Dropdown(['中文', 'English', '粤语', 'Japanese', 'Korean', 'Spanish', 'French'], label='目标语言', value='中文'),
-        gr.Dropdown(SUPPORT_VOICE, value='zh-CN-XiaoxiaoNeural', label='EdgeTTS声音选择'),
+        gr.Dropdown(['xtts', 'cosyvoice', 'EdgeTTS'], label='AI语音生成方法', value='EdgeTTS'),
+        gr.Dropdown(['中文', 'English', '粤语', 'Japanese', 'Korean', 'Spanish', 'French', 'Vietnamese'], label='目标语言', value='Vietnamese'),
+        gr.Dropdown(SUPPORT_VOICE, value='vi-VN-HoaiMyNeural', label='EdgeTTS声音选择'),
 
         gr.Checkbox(label='添加字幕', value=True),
         gr.Slider(minimum=0.5, maximum=2, step=0.05, label='加速倍数', value=1.00),
@@ -113,8 +113,8 @@ translation_interface = gr.Interface(
     fn=translate_all_transcript_under_folder,
     inputs=[
         gr.Textbox(label='视频文件夹', value='videos'),
-        gr.Dropdown(['OpenAI', 'LLM', 'Google Translate', 'Bing Translate', 'Ernie'], label='翻译方式', value='LLM'),
-        gr.Dropdown(['简体中文', '繁体中文', 'English', 'Cantonese', 'Japanese', 'Korean'], label='目标语言', value='简体中文'),
+        gr.Dropdown(['OpenAI', 'LLM', 'Google Translate', 'Bing Translate', 'Ernie'], label='翻译方式', value='Bing Translate'),
+        gr.Dropdown(['简体中文', '繁体中文', 'English', 'Cantonese', 'Japanese', 'Korean', 'Vietnamese'], label='目标语言', value='Vietnamese'),
     ],
     outputs=[
         gr.Text(label='翻译状态'), 
@@ -129,9 +129,9 @@ tts_interface = gr.Interface(
     fn=generate_all_wavs_under_folder,
     inputs=[
         gr.Textbox(label='视频文件夹', value='videos'),
-        gr.Dropdown(['xtts', 'cosyvoice', 'EdgeTTS'], label='AI语音生成方法', value='xtts'),
-        gr.Dropdown(['中文', 'English', '粤语', 'Japanese', 'Korean', 'Spanish', 'French'], label='目标语言', value='中文'),
-        gr.Dropdown(SUPPORT_VOICE, value='zh-CN-XiaoxiaoNeural', label='EdgeTTS声音选择'),
+        gr.Dropdown(['xtts', 'cosyvoice', 'EdgeTTS'], label='AI语音生成方法', value='EdgeTTS'),
+        gr.Dropdown(['中文', 'English', '粤语', 'Japanese', 'Korean', 'Spanish', 'French', 'Vietnamese'], label='目标语言', value='Vietnamese'),
+        gr.Dropdown(SUPPORT_VOICE, value='vi-VN-HoaiMyNeural', label='EdgeTTS声音选择'),
     ],
     outputs=[
         gr.Text(label='合成状态'), 

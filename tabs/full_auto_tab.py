@@ -215,7 +215,10 @@ class FullAutoTab(QWidget):
                 config.get("asr_model", "WhisperX"),
                 config.get("whisperx_size", "large")
             )
-            summary_text += "● 翻译方式: {}\n".format(config.get("translation_method", "LLM"))
+            summary_text += "● 翻译方式: {}, 目标语言: {}\n".format(
+                config.get("translation_method", "LLM"),
+                config.get("target_language_translation", "简体中文")
+            )
             summary_text += "● TTS方式: {}, 语言: {}\n".format(
                 config.get("tts_method", "EdgeTTS"),
                 config.get("target_language_tts", "中文")

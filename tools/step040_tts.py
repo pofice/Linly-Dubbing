@@ -48,14 +48,25 @@ tts_support_languages = {
     'xtts': ['中文', 'English', 'Japanese', 'Korean', 'French', 'Polish', 'Spanish'],
     'bytedance': [],
     'GPTSoVits': [],
-    'EdgeTTS': ['中文', 'English', 'Japanese', 'Korean', 'French', 'Polish', 'Spanish'],
+    'EdgeTTS': ['中文', 'English', 'Japanese', 'Korean', 'French', 'Polish', 'Spanish', 'Vietnamese'],
     # zero_shot usage, <|zh|><|en|><|jp|><|yue|><|ko|> for Chinese/English/Japanese/Cantonese/Korean
     'cosyvoice': ['中文', '粤语', 'English', 'Japanese', 'Korean', 'French'], 
 }
 
 def generate_wavs(method, folder, target_language='中文', voice = 'zh-CN-XiaoxiaoNeural'):
     assert method in ['xtts', 'bytedance', 'cosyvoice', 'EdgeTTS']
-    transcript_path = os.path.join(folder, 'translation.json')
+    
+    # 根据目标语言选择正确的翻译文件
+    if target_language == 'Vietnamese':
+        transcript_path = os.path.join(folder, 'translation_vietnamese.json')
+    else:
+        transcript_path = os.path.join(folder, 'translation.json')
+    
+    # 检查翻译文件是否存在
+    if not os.path.exists(transcript_path):
+        logger.error(f'Translation file not found: {transcript_path}')
+        return f'Translation file not found: {transcript_path}'
+    
     output_folder = os.path.join(folder, 'wavs')
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
@@ -82,7 +93,9 @@ def generate_wavs(method, folder, target_language='中文', voice = 'zh-CN-Xiaox
             # bytedance_tts(text, output_path, speaker_wav, voice_type='BV701_streaming')
         
         if method == 'bytedance':
-            bytedance_tts(text, output_path, speaker_wav, target_language = target_language)
+            # bytedance_tts(text, output_path, speaker_wav, target_language = target_language)
+            logger.error("Bytedance TTS is not available")
+            return "Bytedance TTS is not available"
         elif method == 'xtts':
             xtts_tts(text, output_path, speaker_wav, target_language = target_language)
         elif method == 'cosyvoice':
@@ -133,7 +146,10 @@ def generate_wavs(method, folder, target_language='中文', voice = 'zh-CN-Xiaox
 def generate_all_wavs_under_folder(root_folder, method, target_language='中文', voice = 'zh-CN-XiaoxiaoNeural'):
     wav_combined, wav_ori = None, None
     for root, dirs, files in os.walk(root_folder):
-        if 'translation.json' in files and 'audio_combined.wav' not in files:
+        # 根据目标语言检查相应的翻译文件
+        translation_file = 'translation_vietnamese.json' if target_language == 'Vietnamese' else 'translation.json'
+        
+        if translation_file in files and 'audio_combined.wav' not in files:
             wav_combined, wav_ori = generate_wavs(method, root, target_language, voice)
         elif 'audio_combined.wav' in files:
             wav_combined, wav_ori = os.path.join(root, 'audio_combined.wav'), os.path.join(root, 'audio.wav')

@@ -11,13 +11,14 @@ model = None
 
 
 
-#  <|zh|><|en|><|jp|><|yue|><|ko|> for Chinese/English/Japanese/Cantonese/Korean
+#  <|zh|><|en|><|jp|><|yue|><|ko|><|vi|> for Chinese/English/Japanese/Cantonese/Korean/Vietnamese
 language_map = {
     '中文': 'zh-CN-XiaoxiaoNeural',
     'English': 'en-US-MichelleNeural',
     'Japanese': 'ja-JP-NanamiNeural',
     '粤语': 'zh-HK-HiuMaanNeural',
-    'Korean': 'ko-KR-SunHiNeural'
+    'Korean': 'ko-KR-SunHiNeural',
+    'Vietnamese': 'vi-VN-HoaiMyNeural'
 }
 
 def tts(text, output_path, target_language='中文', voice = 'zh-CN-XiaoxiaoNeural'):

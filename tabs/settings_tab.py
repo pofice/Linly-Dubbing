@@ -131,7 +131,7 @@ class SettingsTab(QWidget):
         self.target_language_translation_label = QLabel("目标语言 (翻译)")
         self.scroll_layout.addWidget(self.target_language_translation_label)
         self.target_language_translation = RadioButtonGroup(
-            ['简体中文', '繁体中文', 'English', 'Cantonese', 'Japanese', 'Korean'], "目标语言 (翻译)", '简体中文')
+            ['简体中文', '繁体中文', 'English', 'Cantonese', 'Japanese', 'Korean', 'Vietnamese'], "目标语言 (翻译)", '简体中文')
         self.scroll_layout.addWidget(self.target_language_translation)
 
         # TTS配置
@@ -146,14 +146,14 @@ class SettingsTab(QWidget):
         self.target_language_tts_label = QLabel("目标语言 (TTS)")
         self.scroll_layout.addWidget(self.target_language_tts_label)
         self.target_language_tts = RadioButtonGroup(
-            ['中文', 'English', '粤语', 'Japanese', 'Korean', 'Spanish', 'French'], "目标语言 (TTS)", '中文')
+            ['中文', 'English', '粤语', 'Japanese', 'Korean', 'Spanish', 'French', 'Vietnamese'], "目标语言 (TTS)", '中文')
         self.scroll_layout.addWidget(self.target_language_tts)
 
         # EdgeTTS声音选择
         self.edge_tts_voice_label = QLabel("EdgeTTS声音选择")
         self.scroll_layout.addWidget(self.edge_tts_voice_label)
         self.edge_tts_voice = RadioButtonGroup(
-            ['zh-CN-XiaoxiaoNeural', 'zh-CN-YunxiNeural', 'en-US-JennyNeural', 'ja-JP-NanamiNeural'],
+            ['zh-CN-XiaoxiaoNeural', 'zh-CN-YunxiNeural', 'en-US-JennyNeural', 'ja-JP-NanamiNeural', 'vi-VN-NamMinhNeural', 'vi-VN-HoaiMyNeural'],
             "EdgeTTS声音选择", 'zh-CN-XiaoxiaoNeural')
         self.scroll_layout.addWidget(self.edge_tts_voice)
 

@@ -106,11 +106,16 @@ def synthesize_video(folder, subtitles=True, speed_up=1.00, fps=30, resolution='
     #     logger.info(f'Video already synthesized in {folder}')
     #     return
     
-    translation_path = os.path.join(folder, 'translation.json')
+    # 检查翻译文件，优先使用越南语翻译文件
+    translation_path = os.path.join(folder, 'translation_vietnamese.json')
+    if not os.path.exists(translation_path):
+        translation_path = os.path.join(folder, 'translation.json')
+    
     input_audio = os.path.join(folder, 'audio_combined.wav')
     input_video = os.path.join(folder, 'download.mp4')
     
     if not os.path.exists(translation_path) or not os.path.exists(input_audio):
+        logger.warning(f'Missing files: translation={os.path.exists(translation_path)}, audio={os.path.exists(input_audio)}')
         return
     
     with open(translation_path, 'r', encoding='utf-8') as f:
