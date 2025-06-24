@@ -7,6 +7,7 @@ from tools.step040_tts import generate_all_wavs_under_folder
 from tools.step050_synthesize_video import synthesize_all_video_under_folder
 from tools.do_everything import do_everything
 from tools.utils import SUPPORT_VOICE
+from tabs.speaker_config_tab import create_speaker_config_interface
 
 # 一键自动化界面
 full_auto_interface = gr.Interface(
@@ -175,6 +176,18 @@ linly_talker_interface = gr.Interface(
     ],
 )
 
+# 说话人性别配置界面
+speaker_config_interface = gr.Interface(
+    fn=lambda: ("请使用下方的配置工具", ""),
+    inputs=[],
+    outputs=[gr.Text(label="说明"), gr.Text(label="配置")],
+    allow_flagging='never',
+)
+
+# 在界面中嵌入说话人配置组件
+with gr.Blocks() as speaker_config_block:
+    create_speaker_config_interface()
+
 my_theme = gr.themes.Soft()
 # 应用程序界面
 app = gr.TabbedInterface(
@@ -185,13 +198,14 @@ app = gr.TabbedInterface(
         demucs_interface,
         asr_inference,
         translation_interface,
+        speaker_config_block,
         tts_interface,
         synthesize_video_interface,
         linly_talker_interface
     ],
     tab_names=[
         '一键自动化 One-Click', 
-        '自动下载视频 ', '人声分离', 'AI智能语音识别', '字幕翻译', 'AI语音合成', '视频合成',
+        '自动下载视频 ', '人声分离', 'AI智能语音识别', '字幕翻译', '🎭 说话人配置', 'AI语音合成', '视频合成',
         'Linly-Talker 对口型（开发中）'],
     title='智能视频多语言AI配音/翻译工具 - Linly-Dubbing'
 )

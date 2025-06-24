@@ -1,0 +1,15 @@
+{
+  "target_language": "Vietnamese",
+  "speakers": {
+    "SPEAKER_00": {
+      "gender": "male",
+      "voice": "vi-VN-NamMinhNeural",
+      "description": "说话人 SPEAKER_00 - 默认设置为male，请根据实际情况修改"
+    },
+    "SPEAKER_01": {
+      "gender": "female",
+      "voice": "vi-VN-HoaiMyNeural",
+      "description": "说话人 SPEAKER_01 - 默认设置为female，请根据实际情况修改"
+    }
+  }
+}

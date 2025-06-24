@@ -11,6 +11,7 @@ from .utils import save_wav, save_wav_norm
 from .step042_tts_xtts import tts as xtts_tts
 from .step043_tts_cosyvoice import tts as cosyvoice_tts
 from .step044_tts_edge_tts import tts as edge_tts
+from .speaker_gender_config import create_speaker_gender_config, get_voice_for_speaker
 from .cn_tx import TextNorm
 from audiostretchy.stretch import stretch_audio
 normalizer = TextNorm()
@@ -79,6 +80,10 @@ def generate_wavs(method, folder, target_language='中文', voice = 'zh-CN-Xiaox
     num_speakers = len(speakers)
     logger.info(f'Found {num_speakers} speakers')
 
+    # 创建说话人性别配置（如果不存在）
+    speaker_config = create_speaker_gender_config(folder, speakers, target_language)
+    logger.info("说话人性别配置已创建，如需修改请编辑 speaker_gender_config.json 文件")
+
     if target_language not in tts_support_languages[method]:
         logger.error(f'{method} does not support {target_language}')
         return f'{method} does not support {target_language}'
@@ -101,7 +106,9 @@ def generate_wavs(method, folder, target_language='中文', voice = 'zh-CN-Xiaox
         elif method == 'cosyvoice':
             cosyvoice_tts(text, output_path, speaker_wav, target_language = target_language)
         elif method == 'EdgeTTS':
-            edge_tts(text, output_path, target_language = target_language, voice = voice)
+            # 根据说话人获取对应的声音
+            speaker_voice = get_voice_for_speaker(folder, speaker, target_language)
+            edge_tts(text, output_path, target_language = target_language, voice = speaker_voice)
         start = line['start']
         end = line['end']
         length = end-start
